@@ -25,20 +25,19 @@ const emit = defineEmits<{
   <div class="flex-1 flex items-center justify-center p-8">
     <div class="w-full max-w-2xl">
       <!-- Header -->
-      <div class="text-center mb-12">
+      <div class="text-center mb-10">
         <h1
-          class="text-5xl font-black tracking-wider text-neon-green mb-2"
-          style="text-shadow: 0 0 20px var(--color-neon-green), 0 0 40px var(--color-neon-green-dim);"
+          class="text-3xl font-bold tracking-wide text-neon-green mb-2 opacity-90"
         >
-          RHYTHM<span class="text-neon-pink">MEMORY</span>
+          温度计，魔丸<span class="text-neon-pink">生产流水线</span>
         </h1>
-        <p class="text-cyber-border text-lg tracking-widest font-mono">
+        <p class="text-cyber-border text-sm tracking-widest font-mono">
           {{ bpm }} BPM • 16-BEAT CYCLE • 8 CARDS
         </p>
       </div>
 
       <!-- Setup Form -->
-      <div class="space-y-8 bg-cyber-dark/80 backdrop-blur-sm p-8 rounded-2xl border border-cyber-border">
+      <div class="space-y-5 bg-cyber-dark/80 backdrop-blur-sm p-6 rounded-xl border border-cyber-border">
         <!-- Image Folder Input -->
         <FileInput
           type="image"
@@ -72,12 +71,15 @@ const emit = defineEmits<{
         <button
           @click="emit('start')"
           :disabled="!canStart"
-          class="w-full py-4 text-xl font-bold tracking-widest rounded-xl transition-all duration-300"
+          class="w-full py-3.5 text-sm font-bold tracking-wider rounded-md transition-all duration-200 flex items-center justify-center gap-2"
           :class="canStart
-            ? 'bg-neon-green text-black hover:shadow-[0_0_30px_var(--color-neon-green)] active:scale-95'
+            ? 'bg-neon-green text-black hover:shadow-[0_0_16px_var(--color-neon-green)] hover:brightness-110 active:scale-[0.98]'
             : 'bg-cyber-card text-gray-600 cursor-not-allowed'"
         >
-          {{ canStart ? 'START GAME' : 'LOAD ASSETS FIRST' }}
+          <svg v-if="canStart" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          {{ canStart ? 'PLAY' : 'LOAD ASSETS FIRST' }}
         </button>
       </div>
     </div>

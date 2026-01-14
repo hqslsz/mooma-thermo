@@ -17,14 +17,14 @@ const showAdvanced = ref(false)
 </script>
 
 <template>
-  <div class="space-y-3">
+  <div class="space-y-2">
     <!-- Toggle Button -->
     <button
       @click="showAdvanced = !showAdvanced"
-      class="flex items-center justify-between w-full px-4 py-3 bg-cyber-card border border-cyber-border rounded-xl text-gray-400 hover:border-neon-purple hover:text-neon-purple transition-colors"
+      class="flex items-center justify-between w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-gray-400 hover:border-neon-purple hover:text-neon-purple transition-all duration-200"
     >
-      <span class="flex items-center gap-3 text-sm font-medium">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <span class="flex items-center gap-2 text-xs font-medium">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -41,7 +41,7 @@ const showAdvanced = ref(false)
         ADVANCED
       </span>
       <svg
-        class="w-5 h-5 transition-transform duration-200"
+        class="w-4 h-4 transition-transform duration-200"
         :class="showAdvanced ? 'rotate-180' : ''"
         fill="none"
         stroke="currentColor"
@@ -54,12 +54,12 @@ const showAdvanced = ref(false)
     <!-- Settings Panel -->
     <div
       v-show="showAdvanced"
-      class="space-y-4 p-4 bg-cyber-black/50 border border-cyber-border rounded-xl"
+      class="space-y-3 p-4 bg-cyber-black/50 border border-cyber-border rounded-lg"
     >
       <!-- BPM -->
-      <div class="space-y-2">
-        <label class="flex items-center gap-2 text-sm font-medium text-neon-purple">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="space-y-1.5">
+        <label class="flex items-center gap-2 text-xs font-medium text-neon-purple pl-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
           BPM
@@ -71,15 +71,15 @@ const showAdvanced = ref(false)
           min="60"
           max="300"
           step="1"
-          class="w-full px-4 py-3 bg-cyber-card border border-cyber-border rounded-xl text-white font-mono focus:border-neon-purple focus:outline-none"
+          class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-purple focus:outline-none transition-colors"
           placeholder="183"
         />
       </div>
 
       <!-- Audio Offset -->
-      <div class="space-y-2">
-        <label class="flex items-center gap-2 text-sm font-medium text-neon-purple">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="space-y-1.5">
+        <label class="flex items-center gap-2 text-xs font-medium text-neon-purple pl-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           AUDIO OFFSET (seconds)
@@ -89,15 +89,15 @@ const showAdvanced = ref(false)
           :value="audioOffset"
           @input="emit('update:audioOffset', Number(($event.target as HTMLInputElement).value))"
           step="0.001"
-          class="w-full px-4 py-3 bg-cyber-card border border-cyber-border rounded-xl text-white font-mono focus:border-neon-purple focus:outline-none"
+          class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-purple focus:outline-none transition-colors"
           placeholder="2.622951"
         />
       </div>
 
       <!-- Rounds -->
-      <div class="space-y-2">
-        <label class="flex items-center gap-2 text-sm font-medium text-neon-orange">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="space-y-1.5">
+        <label class="flex items-center gap-2 text-xs font-medium text-neon-orange pl-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
           ROUNDS
@@ -109,7 +109,7 @@ const showAdvanced = ref(false)
           min="1"
           max="20"
           step="1"
-          class="w-full px-4 py-3 bg-cyber-card border border-cyber-border rounded-xl text-white font-mono focus:border-neon-orange focus:outline-none"
+          class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-orange focus:outline-none transition-colors"
           placeholder="5"
         />
       </div>

@@ -17,19 +17,32 @@ const isFaceVisible = computed(() =>
 
 // Delayed image update - only change image when card is face-down
 const displayImage = ref(props.imageSrc)
+const pendingImageSrc = ref<string | null>(null)
 
+// 尝试应用待更新的图片（等待 opacity 过渡完成后）
+function tryApplyPendingImage() {
+  if (pendingImageSrc.value && !isFaceVisible.value) {
+    const srcToApply = pendingImageSrc.value
+    pendingImageSrc.value = null
+    // 等待 opacity 过渡完成（duration-200 = 200ms）
+    setTimeout(() => {
+      displayImage.value = srcToApply
+    }, 220)
+  }
+}
+
+// 监听 imageSrc 变化
 watch(() => props.imageSrc, (newSrc) => {
   if (newSrc !== displayImage.value) {
-    // If card face is hidden (back is showing), update immediately
-    if (!isFaceVisible.value) {
-      displayImage.value = newSrc
-    } else {
-      // If card face is visible, wait a tiny bit for the flip animation
-      // This shouldn't happen often since round changes when cards flip to back
-      setTimeout(() => {
-        displayImage.value = newSrc
-      }, 50)
-    }
+    pendingImageSrc.value = newSrc
+    tryApplyPendingImage()
+  }
+})
+
+// 监听卡牌翻到背面
+watch(isFaceVisible, (visible) => {
+  if (!visible) {
+    tryApplyPendingImage()
   }
 })
 </script>

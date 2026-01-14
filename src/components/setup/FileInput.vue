@@ -17,14 +17,35 @@ const emit = defineEmits<{
 const previewImages = computed(() => props.images?.slice(0, 8) ?? [])
 const hasMoreImages = computed(() => (props.images?.length ?? 0) > 8)
 
-const colorClass = computed(() => props.type === 'image' ? 'neon-blue' : 'neon-pink')
+// Accent color: image=blue, audio=pink (keep static class names for Tailwind)
+const accentClasses = computed(() => {
+  if (props.type === 'image') {
+    return [
+      'group-hover:border-neon-blue',
+      'group-focus-within:border-neon-blue',
+      'group-focus-within:shadow-[0_0_0_1px_var(--color-neon-blue)]',
+      'group-hover:text-neon-blue'
+    ]
+  }
+  return [
+    'group-hover:border-neon-pink',
+    'group-focus-within:border-neon-pink',
+    'group-focus-within:shadow-[0_0_0_1px_var(--color-neon-pink)]',
+    'group-hover:text-neon-pink'
+  ]
+})
 </script>
 
 <template>
-  <div class="space-y-3">
-    <label :class="`flex items-center gap-3 text-lg font-medium text-${colorClass}`">
+  <div class="space-y-2">
+    <label
+      :class="[
+        'flex items-center gap-2 text-sm font-medium pl-1',
+        props.type === 'image' ? 'text-neon-blue' : 'text-neon-pink'
+      ]"
+    >
       <!-- Image Icon -->
-      <svg v-if="type === 'image'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg v-if="type === 'image'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -33,7 +54,7 @@ const colorClass = computed(() => props.type === 'image' ? 'neon-blue' : 'neon-p
         />
       </svg>
       <!-- Audio Icon -->
-      <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -44,7 +65,7 @@ const colorClass = computed(() => props.type === 'image' ? 'neon-blue' : 'neon-p
       {{ label }}
     </label>
 
-    <div class="relative">
+    <div class="relative group">
       <input
         type="file"
         :webkitdirectory="type === 'image'"
@@ -53,12 +74,12 @@ const colorClass = computed(() => props.type === 'image' ? 'neon-blue' : 'neon-p
         class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
       />
       <div
-        :class="`flex items-center justify-between px-5 py-4 bg-cyber-card border-2 border-dashed border-cyber-border rounded-xl hover:border-${colorClass} transition-colors`"
+        :class="[
+          'pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-gray-400 font-mono text-sm truncate transition-all duration-200',
+          ...accentClasses
+        ]"
       >
-        <span class="text-gray-400 font-mono truncate">
-          {{ displayText || placeholder }}
-        </span>
-        <span :class="`text-${colorClass}`">BROWSE</span>
+        {{ displayText || placeholder }}
       </div>
     </div>
 

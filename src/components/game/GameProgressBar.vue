@@ -13,7 +13,7 @@ defineProps<{
     <div class="absolute top-0 left-1/2 w-0.5 h-full bg-cyber-border z-10"></div>
     <!-- Progress fill -->
     <div
-      class="absolute top-0 left-0 h-full rounded-full transition-all duration-75"
+      class="absolute top-0 left-0 h-full rounded-full transition-[width,background-color] duration-100 ease-linear will-change-[width]"
       :class="currentPhase === 'reveal' ? 'bg-neon-blue' : 'bg-neon-green'"
       :style="{ width: `${progressPercent}%` }"
     ></div>
