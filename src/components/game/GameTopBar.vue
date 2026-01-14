@@ -2,7 +2,7 @@
 import { TOTAL_BEATS } from '../../constants'
 import type { GamePhase } from '../../types'
 
-const props = defineProps<{
+defineProps<{
   bpm: number
   currentPhase: GamePhase
   displayPhase: string
