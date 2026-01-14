@@ -1,0 +1,77 @@
+<script setup lang="ts">
+import GameTopBar from './game/GameTopBar.vue'
+import GameProgressBar from './game/GameProgressBar.vue'
+import GameGrid from './game/GameGrid.vue'
+import type { GamePhase } from '../types'
+
+defineProps<{
+  bpm: number
+  images: string[]
+  audioUrl: string
+  currentPhase: GamePhase
+  displayPhase: string
+  displayBeat: number
+  progressPercent: number
+  revealedCards: boolean[]
+  scanIndex: number
+  isPlaying: boolean
+  currentRound: number
+  totalRounds: number
+}>()
+
+const emit = defineEmits<{
+  'exit': []
+  'toggle-play': []
+  'audio-ended': []
+  'audio-ref': [el: HTMLAudioElement | null]
+}>()
+
+function setAudioRef(el: HTMLAudioElement | null) {
+  emit('audio-ref', el)
+}
+</script>
+
+<template>
+  <div class="flex-1 flex flex-col p-6">
+    <!-- Hidden Audio Element -->
+    <audio
+      :ref="(el) => setAudioRef(el as HTMLAudioElement | null)"
+      :src="audioUrl"
+      @ended="emit('audio-ended')"
+      preload="auto"
+    />
+
+    <!-- Top Bar -->
+    <GameTopBar
+      :bpm="bpm"
+      :current-phase="currentPhase"
+      :display-phase="displayPhase"
+      :display-beat="displayBeat"
+      :current-round="currentRound"
+      :total-rounds="totalRounds"
+      :is-playing="isPlaying"
+      @exit="emit('exit')"
+      @toggle-play="emit('toggle-play')"
+    />
+
+    <!-- Progress Bar -->
+    <GameProgressBar
+      :current-phase="currentPhase"
+      :progress-percent="progressPercent"
+    />
+
+    <!-- Game Grid -->
+    <GameGrid
+      :images="images"
+      :revealed-cards="revealedCards"
+      :scan-index="scanIndex"
+      :current-phase="currentPhase"
+    />
+
+    <!-- Bottom Instructions -->
+    <div class="text-center text-gray-500 text-sm font-mono mt-6">
+      <span class="text-neon-green">SPACE</span> Play/Pause •
+      <span class="text-neon-pink">ESC</span> Exit
+    </div>
+  </div>
+</template>
