@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
 import GameTopBar from './game/GameTopBar.vue'
 import GameProgressBar from './game/GameProgressBar.vue'
 import GameGrid from './game/GameGrid.vue'
@@ -18,6 +19,22 @@ defineProps<{
   currentRound: number
   totalRounds: number
 }>()
+
+const hideUI = ref(false)
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'h' || e.key === 'H') {
+    hideUI.value = !hideUI.value
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 
 const emit = defineEmits<{
   'exit': []
@@ -69,9 +86,10 @@ function setAudioRef(el: HTMLAudioElement | null) {
     />
 
     <!-- Bottom Instructions -->
-    <div class="text-center text-gray-500 text-sm font-mono mt-6">
+    <div v-show="!hideUI" class="text-center text-gray-500 text-sm font-mono mt-6">
       <span class="text-neon-green">SPACE</span> Play/Pause •
-      <span class="text-neon-pink">ESC</span> Exit
+      <span class="text-neon-pink">ESC</span> Exit •
+      <span class="text-neon-blue">H</span> Hide UI
     </div>
   </div>
 </template>

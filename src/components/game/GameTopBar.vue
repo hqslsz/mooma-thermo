@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
 import { TOTAL_BEATS } from '../../constants'
 import type { GamePhase } from '../../types'
 
@@ -17,17 +18,34 @@ const emit = defineEmits<{
   'toggle-play': []
 }>()
 
+const hideUI = ref(false)
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'h' || e.key === 'H') {
+    hideUI.value = !hideUI.value
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>
   <div class="flex items-center justify-between mb-6 px-4 py-2 bg-cyber-dark/50 rounded-xl">
     <!-- Exit Button -->
     <button
+      v-show="!hideUI"
       @click="emit('exit')"
       class="min-w-[70px] h-[35px] text-xs font-bold tracking-wider text-neon-pink border-2 border-neon-pink rounded-xl hover:bg-neon-pink hover:text-black transition-colors"
     >
       ← EXIT
     </button>
+    <div v-show="hideUI" class="min-w-[70px] h-[35px]"></div>
 
     <!-- Status Display -->
     <div class="flex items-center gap-8 font-mono">
@@ -57,12 +75,14 @@ const emit = defineEmits<{
 
     <!-- Play/Pause Button -->
     <button
+      v-show="!hideUI"
       @click="emit('toggle-play')"
       class="min-w-[70px] h-[35px] text-xs font-bold tracking-wider rounded-xl transition-colors"
       :class="isPlaying ? 'bg-neon-pink text-black' : 'bg-neon-green text-black'"
     >
       {{ isPlaying ? '⏸ PAUSE' : '▶ PLAY' }}
     </button>
+    <div v-show="hideUI" class="min-w-[70px] h-[35px]"></div>
   </div>
 </template>
 
