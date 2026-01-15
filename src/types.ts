@@ -6,6 +6,8 @@ export type GamePhase = 'reveal' | 'scan'
 
 export type GameState = 'setup' | 'playing'
 
+export type GameMode = 'standard' | 'random'
+
 // ============================================================================
 // Component Props Types
 // ============================================================================

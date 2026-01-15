@@ -1,22 +1,26 @@
 import { ref, computed, onUnmounted, type Ref } from 'vue'
 import { CARD_COUNT } from '../constants'
+import { getImagesForRoundByMode } from './useImageSelector'
+import type { GameMode } from '../types'
 
 // ============================================================================
 // Asset Loader Composable
 // ============================================================================
-export function useAssetLoader(totalRounds: Ref<number>) {
+export function useAssetLoader(totalRounds: Ref<number>, gameMode: Ref<GameMode>) {
   const allImages = ref<string[]>([])
   const audioFile = ref<File | null>(null)
   const audioUrl = ref<string>('')
+  
+  // Current round images - refreshed on each round change
+  const currentRoundImages = ref<string[]>([])
 
   const hasImages = computed(() => allImages.value.length > 0)
   const hasAudio = computed(() => !!audioUrl.value)
   const canStart = computed(() => hasImages.value && hasAudio.value)
 
-  // Get images for a specific round (1-indexed)
-  function getImagesForRound(round: number): string[] {
-    const startIdx = (round - 1) * CARD_COUNT
-    return allImages.value.slice(startIdx, startIdx + CARD_COUNT)
+  // Refresh images for a specific round (called on round change or game start)
+  function refreshRoundImages(round: number): void {
+    currentRoundImages.value = getImagesForRoundByMode(allImages.value, round, gameMode.value)
   }
 
   // ============================================================================
@@ -44,14 +48,18 @@ export function useAssetLoader(totalRounds: Ref<number>) {
     // Create blob URLs
     let loadedImages = imageFiles.map(file => URL.createObjectURL(file))
 
-    // We need totalRounds * CARD_COUNT images
-    const requiredImages = totalRounds.value * CARD_COUNT
-
-    // Repeat images if not enough
-    while (loadedImages.length < requiredImages) {
-      loadedImages = [...loadedImages, ...loadedImages]
+    // For standard mode: pre-duplicate images to fill all rounds
+    // For random mode: keep original images (selection happens per round)
+    if (gameMode.value === 'standard') {
+      const requiredImages = totalRounds.value * CARD_COUNT
+      while (loadedImages.length < requiredImages) {
+        loadedImages = [...loadedImages, ...loadedImages]
+      }
+      allImages.value = loadedImages.slice(0, requiredImages)
+    } else {
+      // Random mode: store all original images
+      allImages.value = loadedImages
     }
-    allImages.value = loadedImages.slice(0, requiredImages)
   }
 
   // ============================================================================
@@ -88,6 +96,7 @@ export function useAssetLoader(totalRounds: Ref<number>) {
     allImages,
     audioFile,
     audioUrl,
+    currentRoundImages,
     // Computed
     hasImages,
     hasAudio,
@@ -95,7 +104,7 @@ export function useAssetLoader(totalRounds: Ref<number>) {
     // Methods
     handleImageFolder,
     handleAudioFile,
-    getImagesForRound,
+    refreshRoundImages,
     cleanup,
   }
 }

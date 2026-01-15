@@ -92,7 +92,7 @@ const accentClasses = computed(() => {
       >
         <img
           :src="img"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-contain"
           :class="hasMoreImages && i === 7 ? 'blur-sm' : ''"
         />
         <div

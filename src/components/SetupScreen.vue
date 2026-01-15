@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import FileInput from './setup/FileInput.vue'
 import AdvancedSettings from './setup/AdvancedSettings.vue'
+import type { GameMode } from '../types'
 
 defineProps<{
   bpm: number
   audioOffset: number
   totalRounds: number
+  gameMode: GameMode
   images: string[]
   audioFileName: string | null
   canStart: boolean
@@ -15,6 +17,7 @@ const emit = defineEmits<{
   'update:bpm': [value: number]
   'update:audioOffset': [value: number]
   'update:totalRounds': [value: number]
+  'update:gameMode': [value: GameMode]
   'select-images': [event: Event]
   'select-audio': [event: Event]
   'start': []
@@ -62,9 +65,11 @@ const emit = defineEmits<{
           :bpm="bpm"
           :audio-offset="audioOffset"
           :total-rounds="totalRounds"
+          :game-mode="gameMode"
           @update:bpm="emit('update:bpm', $event)"
           @update:audio-offset="emit('update:audioOffset', $event)"
           @update:total-rounds="emit('update:totalRounds', $event)"
+          @update:game-mode="emit('update:gameMode', $event)"
         />
 
         <!-- Start Button -->

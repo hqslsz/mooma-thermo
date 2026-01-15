@@ -1,26 +1,29 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { GameMode } from '../../types'
 
 defineProps<{
   bpm: number
   audioOffset: number
   totalRounds: number
+  gameMode: GameMode
 }>()
 
 const emit = defineEmits<{
   'update:bpm': [value: number]
   'update:audioOffset': [value: number]
   'update:totalRounds': [value: number]
+  'update:gameMode': [value: GameMode]
 }>()
 
-const showAdvanced = ref(false)
+const showOptions = ref(false)
 </script>
 
 <template>
   <div class="space-y-2">
     <!-- Toggle Button -->
     <button
-      @click="showAdvanced = !showAdvanced"
+      @click="showOptions = !showOptions"
       class="flex items-center justify-between w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-gray-400 hover:border-neon-purple hover:text-neon-purple transition-all duration-200"
     >
       <span class="flex items-center gap-2 text-xs font-medium">
@@ -38,11 +41,11 @@ const showAdvanced = ref(false)
             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
           />
         </svg>
-        ADVANCED
+        OPTIONS
       </span>
       <svg
         class="w-4 h-4 transition-transform duration-200"
-        :class="showAdvanced ? 'rotate-180' : ''"
+        :class="showOptions ? 'rotate-180' : ''"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -53,9 +56,42 @@ const showAdvanced = ref(false)
 
     <!-- Settings Panel -->
     <div
-      v-show="showAdvanced"
+      v-show="showOptions"
       class="space-y-3 p-4 bg-cyber-black/50 border border-cyber-border rounded-lg"
     >
+      <!-- Game Mode -->
+      <div class="space-y-1.5">
+        <label class="flex items-center gap-2 text-xs font-medium text-neon-cyan pl-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+          MODE
+        </label>
+        <div class="flex gap-2">
+          <button
+            @click="emit('update:gameMode', 'standard')"
+            class="flex-1 py-2.5 text-xs font-medium rounded-lg border transition-all duration-200"
+            :class="gameMode === 'standard'
+              ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan'
+              : 'bg-cyber-card border-cyber-border text-gray-400 hover:border-neon-cyan/50'"
+          >
+            STANDARD
+          </button>
+          <button
+            @click="emit('update:gameMode', 'random')"
+            class="flex-1 py-2.5 text-xs font-medium rounded-lg border transition-all duration-200"
+            :class="gameMode === 'random'
+              ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan'
+              : 'bg-cyber-card border-cyber-border text-gray-400 hover:border-neon-cyan/50'"
+          >
+            RANDOM
+          </button>
+        </div>
+        <p class="text-[10px] text-gray-500 pl-1">
+          {{ gameMode === 'standard' ? '按文件顺序展示图片' : '每轮随机选择8张不重复图片' }}
+        </p>
+      </div>
+
       <!-- BPM -->
       <div class="space-y-1.5">
         <label class="flex items-center gap-2 text-xs font-medium text-neon-purple pl-1">

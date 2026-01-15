@@ -13,4 +13,5 @@ export const CARD_COUNT = 8
 export const DEFAULT_BPM = 183
 export const DEFAULT_AUDIO_OFFSET = 2.622951
 export const DEFAULT_TOTAL_ROUNDS = 5
+export const DEFAULT_GAME_MODE = 'standard' as const
 

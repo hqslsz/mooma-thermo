@@ -67,7 +67,7 @@ watch(isFaceVisible, (visible) => {
     >
       <img
         :src="displayImage"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-contain"
         :alt="`Card ${index + 1}`"
       />
     </div>
