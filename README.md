@@ -62,8 +62,8 @@ A rhythm-based memory game where players memorize and recall images on cards fol
 
 ```bash
 # Clone the repository
-git clone https://github.com/Quasi2317/mwzzwdjs.git
-cd mwzzwdjs
+git clone https://github.com/Quasi2317/mooma-thermo.git
+cd mooma-thermo
 
 # Install dependencies
 npm install
