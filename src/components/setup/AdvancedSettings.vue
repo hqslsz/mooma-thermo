@@ -7,6 +7,7 @@ defineProps<{
   audioOffset: number
   totalRounds: number
   gameMode: GameMode
+  finishDelay: number
 }>()
 
 const emit = defineEmits<{
@@ -14,6 +15,7 @@ const emit = defineEmits<{
   'update:audioOffset': [value: number]
   'update:totalRounds': [value: number]
   'update:gameMode': [value: GameMode]
+  'update:finishDelay': [value: number]
 }>()
 
 const showOptions = ref(false)
@@ -148,6 +150,29 @@ const showOptions = ref(false)
           class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-orange focus:outline-none transition-colors"
           placeholder="5"
         />
+      </div>
+
+      <!-- Finish Delay -->
+      <div class="space-y-1.5">
+        <label class="flex items-center gap-2 text-xs font-medium text-neon-pink pl-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          FINISH DELAY (seconds)
+        </label>
+        <input
+          type="number"
+          :value="finishDelay"
+          @input="emit('update:finishDelay', Number(($event.target as HTMLInputElement).value))"
+          min="0"
+          max="10"
+          step="0.5"
+          class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-pink focus:outline-none transition-colors"
+          placeholder="3"
+        />
+        <p class="text-[10px] text-gray-500 pl-1">
+          游戏结束后等待的时间，再跳转到结算页面
+        </p>
       </div>
     </div>
   </div>

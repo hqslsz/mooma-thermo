@@ -4,7 +4,7 @@
 
 export type GamePhase = 'reveal' | 'scan'
 
-export type GameState = 'setup' | 'playing'
+export type GameState = 'setup' | 'playing' | 'finished'
 
 export type GameMode = 'standard' | 'random'
 

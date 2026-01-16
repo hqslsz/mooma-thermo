@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import SetupScreen from './components/SetupScreen.vue'
 import GameScreen from './components/GameScreen.vue'
+import FinishedScreen from './components/FinishedScreen.vue'
 import { useGameEngine, useAssetLoader } from './composables'
 import { DEFAULT_GAME_MODE } from './constants'
 import type { GameState, GameMode } from './types'
@@ -18,12 +19,14 @@ const {
   bpm,
   audioOffset,
   totalRounds,
+  finishDelay,
   currentPhase,
   revealedCards,
   scanIndex,
   isPlaying,
   audioElement,
   currentRound,
+  isGameFinished,
   displayBeat,
   displayPhase,
   progressPercent,
@@ -31,6 +34,7 @@ const {
   stopEngine,
   togglePlayPause,
   handleAudioEnded,
+  resetGame,
 } = useGameEngine()
 
 const {
@@ -61,6 +65,18 @@ function stopGame() {
   gameState.value = 'setup'
 }
 
+function backToSetup() {
+  resetGame()
+  gameState.value = 'setup'
+}
+
+// Watch for game finished state
+watch(isGameFinished, (finished) => {
+  if (finished) {
+    gameState.value = 'finished'
+  }
+})
+
 function handleAudioRef(el: HTMLAudioElement | null) {
   audioElement.value = el
 }
@@ -75,6 +91,10 @@ function handleKeydown(e: KeyboardEvent) {
       togglePlayPause()
     } else if (e.code === 'Escape') {
       stopGame()
+    }
+  } else if (gameState.value === 'finished') {
+    if (e.code === 'Escape') {
+      backToSetup()
     }
   }
 }
@@ -111,6 +131,7 @@ watch(currentRound, (newRound) => {
       :audio-offset="audioOffset"
       :total-rounds="totalRounds"
       :game-mode="gameMode"
+      :finish-delay="finishDelay"
       :images="allImages"
       :audio-file-name="audioFile?.name ?? null"
       :can-start="canStart"
@@ -118,6 +139,7 @@ watch(currentRound, (newRound) => {
       @update:audio-offset="audioOffset = $event"
       @update:total-rounds="totalRounds = $event"
       @update:game-mode="gameMode = $event"
+      @update:finish-delay="finishDelay = $event"
       @select-images="handleImageFolder"
       @select-audio="handleAudioFile"
       @start="startGame"
@@ -125,7 +147,7 @@ watch(currentRound, (newRound) => {
 
     <!-- Game Screen -->
     <GameScreen
-      v-else
+      v-else-if="gameState === 'playing'"
       :bpm="bpm"
       :images="currentRoundImages"
       :audio-url="audioUrl"
@@ -142,6 +164,12 @@ watch(currentRound, (newRound) => {
       @toggle-play="togglePlayPause"
       @audio-ended="handleAudioEnded"
       @audio-ref="handleAudioRef"
+    />
+
+    <!-- Finished Screen -->
+    <FinishedScreen
+      v-else-if="gameState === 'finished'"
+      @back="backToSetup"
     />
   </div>
 </template>

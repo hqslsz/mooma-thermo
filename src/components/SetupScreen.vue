@@ -8,6 +8,7 @@ defineProps<{
   audioOffset: number
   totalRounds: number
   gameMode: GameMode
+  finishDelay: number
   images: string[]
   audioFileName: string | null
   canStart: boolean
@@ -18,6 +19,7 @@ const emit = defineEmits<{
   'update:audioOffset': [value: number]
   'update:totalRounds': [value: number]
   'update:gameMode': [value: GameMode]
+  'update:finishDelay': [value: number]
   'select-images': [event: Event]
   'select-audio': [event: Event]
   'start': []
@@ -32,7 +34,7 @@ const emit = defineEmits<{
         <h1
           class="text-3xl font-bold tracking-wide text-neon-green mb-2 opacity-90"
         >
-          温度计，魔丸<span class="text-neon-pink">生产流水线</span>
+        Mooma Thermo<span class="text-neon-pink"> 123GO！</span>
         </h1>
         <p class="text-cyber-border text-sm tracking-widest font-mono">
           {{ bpm }} BPM • 16-BEAT CYCLE • 8 CARDS
@@ -66,10 +68,12 @@ const emit = defineEmits<{
           :audio-offset="audioOffset"
           :total-rounds="totalRounds"
           :game-mode="gameMode"
+          :finish-delay="finishDelay"
           @update:bpm="emit('update:bpm', $event)"
           @update:audio-offset="emit('update:audioOffset', $event)"
           @update:total-rounds="emit('update:totalRounds', $event)"
           @update:game-mode="emit('update:gameMode', $event)"
+          @update:finish-delay="emit('update:finishDelay', $event)"
         />
 
         <!-- Start Button -->

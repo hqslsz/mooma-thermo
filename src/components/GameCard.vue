@@ -31,13 +31,20 @@ function tryApplyPendingImage() {
   }
 }
 
-// 监听 imageSrc 变化
+// 监听 imageSrc 变化 - 使用 flush: 'sync' 确保同步执行
+// 这样在新轮次开始时，图片更新能在卡片翻开之前完成
 watch(() => props.imageSrc, (newSrc) => {
   if (newSrc !== displayImage.value) {
-    pendingImageSrc.value = newSrc
-    tryApplyPendingImage()
+    // 如果卡片当前是背面状态，可以安全地立即更新
+    if (!isFaceVisible.value) {
+      displayImage.value = newSrc
+      pendingImageSrc.value = null
+    } else {
+      // 卡片正面可见时，等待它翻到背面再更新
+      pendingImageSrc.value = newSrc
+    }
   }
-})
+}, { flush: 'sync' })
 
 // 监听卡牌翻到背面
 watch(isFaceVisible, (visible) => {

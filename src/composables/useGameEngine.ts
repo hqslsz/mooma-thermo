@@ -6,6 +6,7 @@ import {
   DEFAULT_BPM,
   DEFAULT_AUDIO_OFFSET,
   DEFAULT_TOTAL_ROUNDS,
+  DEFAULT_FINISH_DELAY,
 } from '../constants'
 import type { GamePhase } from '../types'
 
@@ -17,6 +18,7 @@ export function useGameEngine() {
   const bpm = ref(DEFAULT_BPM)
   const audioOffset = ref(DEFAULT_AUDIO_OFFSET)
   const totalRounds = ref(DEFAULT_TOTAL_ROUNDS)
+  const finishDelay = ref(DEFAULT_FINISH_DELAY)
 
   // State
   const currentBeat = ref(0)
@@ -25,6 +27,7 @@ export function useGameEngine() {
   const scanIndex = ref(-1)
   const isPlaying = ref(false)
   const currentRound = ref(1)
+  const isGameFinished = ref(false)
 
   // Audio
   const audioElement = ref<HTMLAudioElement | null>(null)
@@ -32,6 +35,7 @@ export function useGameEngine() {
   // Animation frame
   let animationFrameId: number | null = null
   let lastBeatInt = -1
+  let finishTimeoutId: ReturnType<typeof setTimeout> | null = null
 
   // ============================================================================
   // COMPUTED
@@ -74,11 +78,34 @@ export function useGameEngine() {
     const isCycleReset = lastBeatInt >= REVEAL_PHASE_END && beatInt < lastBeatInt
 
     if (isCycleReset) {
+      // Check if we've reached the maximum rounds
+      if (currentRound.value >= totalRounds.value) {
+        // Game finished - stop the engine and clear UI
+        scanIndex.value = -1
+        revealedCards.value = new Array(CARD_COUNT).fill(false)
+        
+        if (audioElement.value) {
+          audioElement.value.pause()
+        }
+        isPlaying.value = false
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId)
+          animationFrameId = null
+        }
+        
+        // Delay before showing finished screen
+        finishTimeoutId = setTimeout(() => {
+          isGameFinished.value = true
+          finishTimeoutId = null
+        }, finishDelay.value * 1000)
+        return
+      }
+      
+      // Continue to next round
       revealedCards.value = new Array(CARD_COUNT).fill(false)
       scanIndex.value = -1
       lastBeatInt = -1
-      // Advance to next round, loop back to 1 after reaching totalRounds
-      currentRound.value = currentRound.value >= totalRounds.value ? 1 : currentRound.value + 1
+      currentRound.value = currentRound.value + 1
     }
 
     // Determine phase
@@ -128,15 +155,26 @@ export function useGameEngine() {
       animationFrameId = null
     }
 
+    if (finishTimeoutId) {
+      clearTimeout(finishTimeoutId)
+      finishTimeoutId = null
+    }
+
     if (audioElement.value) {
       audioElement.value.pause()
       audioElement.value.currentTime = 0
     }
 
     isPlaying.value = false
+    isGameFinished.value = false
     revealedCards.value = new Array(CARD_COUNT).fill(false)
     scanIndex.value = -1
     currentRound.value = 1
+  }
+
+  function resetGame() {
+    stopEngine()
+    isGameFinished.value = false
   }
 
   function togglePlayPause() {
@@ -165,6 +203,9 @@ export function useGameEngine() {
     if (animationFrameId) {
       cancelAnimationFrame(animationFrameId)
     }
+    if (finishTimeoutId) {
+      clearTimeout(finishTimeoutId)
+    }
   })
 
   return {
@@ -172,6 +213,7 @@ export function useGameEngine() {
     bpm,
     audioOffset,
     totalRounds,
+    finishDelay,
     // State
     currentBeat,
     currentPhase,
@@ -180,6 +222,7 @@ export function useGameEngine() {
     isPlaying,
     audioElement,
     currentRound,
+    isGameFinished,
     // Computed
     displayBeat,
     displayPhase,
@@ -189,5 +232,6 @@ export function useGameEngine() {
     stopEngine,
     togglePlayPause,
     handleAudioEnded,
+    resetGame,
   }
 }
