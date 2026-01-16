@@ -105,7 +105,15 @@ export function useGameEngine() {
       revealedCards.value = new Array(CARD_COUNT).fill(false)
       scanIndex.value = -1
       lastBeatInt = -1
+      // Force cards face-down before image refresh (random mode)
+      currentPhase.value = 'reveal'
       currentRound.value = currentRound.value + 1
+      
+      // 重要：在这里 return，让下一帧来处理 beat 0 的 reveal
+      // 这给图片更新（由 currentRound 的 watcher 触发）留出时间
+      // 否则第一张卡片会在图片更新前就被 reveal，导致随机模式下第一张图不变
+      animationFrameId = requestAnimationFrame(updateBeat)
+      return
     }
 
     // Determine phase

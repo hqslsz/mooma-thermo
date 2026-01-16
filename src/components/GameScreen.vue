@@ -83,6 +83,7 @@ function setAudioRef(el: HTMLAudioElement | null) {
       :revealed-cards="revealedCards"
       :scan-index="scanIndex"
       :current-phase="currentPhase"
+      :current-round="currentRound"
     />
 
     <!-- Bottom Instructions -->

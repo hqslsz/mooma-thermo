@@ -7,6 +7,7 @@ defineProps<{
   revealedCards: boolean[]
   scanIndex: number
   currentPhase: GamePhase
+  currentRound: number
 }>()
 </script>
 
@@ -15,7 +16,7 @@ defineProps<{
     <div class="grid grid-cols-4 grid-rows-2 gap-4 w-full max-w-4xl aspect-[2/1]">
       <GameCard
         v-for="index in 8"
-        :key="`card-${index - 1}`"
+        :key="`card-${currentRound}-${index - 1}`"
         :index="index - 1"
         :image-src="images[index - 1] || ''"
         :is-revealed="revealedCards[index - 1]"
