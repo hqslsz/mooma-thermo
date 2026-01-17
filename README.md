@@ -126,7 +126,7 @@ npm run check
 ```
 src/
 ├── assets/
-│   └── Mooma-logo.jpg          # Project logo
+│   └── Mooma-logo.png          # Project logo
 ├── components/
 │   ├── game/
 │   │   ├── GameGrid.vue        # Card grid component
