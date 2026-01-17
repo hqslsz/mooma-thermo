@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Custom theme for cyberpunk aesthetic */
 @theme {
@@ -14,19 +14,22 @@
   --color-neon-cyan: #00ffea;
   --color-neon-purple: #bf00ff;
   --color-neon-orange: #ff9500;
-  
+
   --font-family-cyber: 'Orbitron', 'Rajdhani', system-ui, sans-serif;
   --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 /* CSS Reset & Base Styles */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -45,15 +48,16 @@ body {
 
 /* Neon glow animations */
 @keyframes neon-pulse {
-  0%, 100% {
-    box-shadow: 
+  0%,
+  100% {
+    box-shadow:
       0 0 5px var(--color-neon-green),
       0 0 10px var(--color-neon-green),
       0 0 20px var(--color-neon-green),
       0 0 40px var(--color-neon-green-dim);
   }
   50% {
-    box-shadow: 
+    box-shadow:
       0 0 10px var(--color-neon-green),
       0 0 20px var(--color-neon-green),
       0 0 40px var(--color-neon-green),
@@ -62,7 +66,8 @@ body {
 }
 
 @keyframes scan-glow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.8;
   }
   50% {
@@ -85,7 +90,8 @@ body {
 }
 
 @keyframes beat-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -106,7 +112,7 @@ body {
 }
 
 .round-glow {
-  text-shadow: 
+  text-shadow:
     0 0 10px var(--color-neon-orange),
     0 0 20px var(--color-neon-orange),
     0 0 40px var(--color-neon-orange);

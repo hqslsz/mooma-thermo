@@ -14,7 +14,7 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  'exit': []
+  exit: []
   'toggle-play': []
 }>()
 
@@ -40,8 +40,8 @@ onUnmounted(() => {
     <!-- Exit Button -->
     <button
       v-show="!hideUI"
-      @click="emit('exit')"
       class="min-w-[70px] h-[35px] text-xs font-bold tracking-wider text-neon-pink border-2 border-neon-pink rounded-xl hover:bg-neon-pink hover:text-black transition-colors"
+      @click="emit('exit')"
     >
       ← EXIT
     </button>
@@ -51,15 +51,16 @@ onUnmounted(() => {
     <div class="flex items-center gap-8 font-mono">
       <div class="text-center">
         <div class="text-xs text-gray-500 tracking-widest">PHASE</div>
-        <div class="text-2xl font-bold" :class="currentPhase === 'reveal' ? 'text-neon-blue' : 'text-neon-green'">
+        <div
+          class="text-2xl font-bold"
+          :class="currentPhase === 'reveal' ? 'text-neon-blue' : 'text-neon-green'"
+        >
           {{ displayPhase }}
         </div>
       </div>
       <div class="text-center">
         <div class="text-xs text-gray-500 tracking-widest">ROUND</div>
-        <div class="text-2xl font-bold text-neon-orange">
-          {{ currentRound }}/{{ totalRounds }}
-        </div>
+        <div class="text-2xl font-bold text-neon-orange">{{ currentRound }}/{{ totalRounds }}</div>
       </div>
       <div class="text-center">
         <div class="text-xs text-gray-500 tracking-widest">BEAT</div>
@@ -76,15 +77,12 @@ onUnmounted(() => {
     <!-- Play/Pause Button -->
     <button
       v-show="!hideUI"
-      @click="emit('toggle-play')"
       class="min-w-[70px] h-[35px] text-xs font-bold tracking-wider rounded-xl transition-colors"
       :class="isPlaying ? 'bg-neon-pink text-black' : 'bg-neon-green text-black'"
+      @click="emit('toggle-play')"
     >
       {{ isPlaying ? '⏸ PAUSE' : '▶ PLAY' }}
     </button>
     <div v-show="hideUI" class="min-w-[70px] h-[35px]"></div>
   </div>
 </template>
-
-
-

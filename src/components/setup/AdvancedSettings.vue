@@ -25,8 +25,8 @@ const showOptions = ref(false)
   <div class="space-y-2">
     <!-- Toggle Button -->
     <button
-      @click="showOptions = !showOptions"
       class="flex items-center justify-between w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-gray-400 hover:border-neon-purple hover:text-neon-purple transition-all duration-200"
+      @click="showOptions = !showOptions"
     >
       <span class="flex items-center gap-2 text-xs font-medium">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,26 +65,35 @@ const showOptions = ref(false)
       <div class="space-y-1.5">
         <label class="flex items-center gap-2 text-xs font-medium text-neon-cyan pl-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
           </svg>
           MODE
         </label>
         <div class="flex gap-2">
           <button
-            @click="emit('update:gameMode', 'standard')"
             class="flex-1 py-2.5 text-xs font-medium rounded-lg border transition-all duration-200"
-            :class="gameMode === 'standard'
-              ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan'
-              : 'bg-cyber-card border-cyber-border text-gray-400 hover:border-neon-cyan/50'"
+            :class="
+              gameMode === 'standard'
+                ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan'
+                : 'bg-cyber-card border-cyber-border text-gray-400 hover:border-neon-cyan/50'
+            "
+            @click="emit('update:gameMode', 'standard')"
           >
             STANDARD
           </button>
           <button
-            @click="emit('update:gameMode', 'random')"
             class="flex-1 py-2.5 text-xs font-medium rounded-lg border transition-all duration-200"
-            :class="gameMode === 'random'
-              ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan'
-              : 'bg-cyber-card border-cyber-border text-gray-400 hover:border-neon-cyan/50'"
+            :class="
+              gameMode === 'random'
+                ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan'
+                : 'bg-cyber-card border-cyber-border text-gray-400 hover:border-neon-cyan/50'
+            "
+            @click="emit('update:gameMode', 'random')"
           >
             RANDOM
           </button>
@@ -98,19 +107,24 @@ const showOptions = ref(false)
       <div class="space-y-1.5">
         <label class="flex items-center gap-2 text-xs font-medium text-neon-purple pl-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
           </svg>
           BPM
         </label>
         <input
           type="number"
           :value="bpm"
-          @input="emit('update:bpm', Number(($event.target as HTMLInputElement).value))"
           min="60"
           max="300"
           step="1"
           class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-purple focus:outline-none transition-colors"
           placeholder="183"
+          @input="emit('update:bpm', Number(($event.target as HTMLInputElement).value))"
         />
       </div>
 
@@ -118,17 +132,22 @@ const showOptions = ref(false)
       <div class="space-y-1.5">
         <label class="flex items-center gap-2 text-xs font-medium text-neon-purple pl-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           AUDIO OFFSET (seconds)
         </label>
         <input
           type="number"
           :value="audioOffset"
-          @input="emit('update:audioOffset', Number(($event.target as HTMLInputElement).value))"
           step="0.001"
           class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-purple focus:outline-none transition-colors"
           placeholder="2.622951"
+          @input="emit('update:audioOffset', Number(($event.target as HTMLInputElement).value))"
         />
       </div>
 
@@ -136,19 +155,24 @@ const showOptions = ref(false)
       <div class="space-y-1.5">
         <label class="flex items-center gap-2 text-xs font-medium text-neon-orange pl-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
           </svg>
           ROUNDS
         </label>
         <input
           type="number"
           :value="totalRounds"
-          @input="emit('update:totalRounds', Number(($event.target as HTMLInputElement).value))"
           min="1"
           max="20"
           step="1"
           class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-orange focus:outline-none transition-colors"
           placeholder="5"
+          @input="emit('update:totalRounds', Number(($event.target as HTMLInputElement).value))"
         />
       </div>
 
@@ -156,25 +180,27 @@ const showOptions = ref(false)
       <div class="space-y-1.5">
         <label class="flex items-center gap-2 text-xs font-medium text-neon-pink pl-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           FINISH DELAY (seconds)
         </label>
         <input
           type="number"
           :value="finishDelay"
-          @input="emit('update:finishDelay', Number(($event.target as HTMLInputElement).value))"
           min="0"
           max="10"
           step="0.5"
           class="w-full pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-white text-sm font-mono focus:border-neon-pink focus:outline-none transition-colors"
           placeholder="3"
+          @input="emit('update:finishDelay', Number(($event.target as HTMLInputElement).value))"
         />
-        <p class="text-[10px] text-gray-500 pl-1">
-          游戏结束后等待的时间，再跳转到结算页面
-        </p>
+        <p class="text-[10px] text-gray-500 pl-1">游戏结束后等待的时间，再跳转到结算页面</p>
       </div>
     </div>
   </div>
 </template>
-

@@ -167,9 +167,6 @@ watch(currentRound, (newRound) => {
     />
 
     <!-- Finished Screen -->
-    <FinishedScreen
-      v-else-if="gameState === 'finished'"
-      @back="backToSetup"
-    />
+    <FinishedScreen v-else-if="gameState === 'finished'" @back="backToSetup" />
   </div>
 </template>

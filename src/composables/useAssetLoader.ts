@@ -10,7 +10,7 @@ export function useAssetLoader(totalRounds: Ref<number>, gameMode: Ref<GameMode>
   const allImages = ref<string[]>([])
   const audioFile = ref<File | null>(null)
   const audioUrl = ref<string>('')
-  
+
   // Current round images - refreshed on each round change
   const currentRoundImages = ref<string[]>([])
 
@@ -32,13 +32,11 @@ export function useAssetLoader(totalRounds: Ref<number>, gameMode: Ref<GameMode>
     if (!files) return
 
     // Clear previous images
-    allImages.value.forEach(url => URL.revokeObjectURL(url))
+    allImages.value.forEach((url) => URL.revokeObjectURL(url))
     allImages.value = []
 
     // Filter for image files and convert to blob URLs
-    const imageFiles = Array.from(files).filter(file =>
-      file.type.startsWith('image/')
-    )
+    const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'))
 
     if (imageFiles.length === 0) {
       alert('No image files found in the selected folder.')
@@ -46,7 +44,7 @@ export function useAssetLoader(totalRounds: Ref<number>, gameMode: Ref<GameMode>
     }
 
     // Create blob URLs
-    let loadedImages = imageFiles.map(file => URL.createObjectURL(file))
+    let loadedImages = imageFiles.map((file) => URL.createObjectURL(file))
 
     // For standard mode: pre-duplicate images to fill all rounds
     // For random mode: keep original images (selection happens per round)
@@ -83,7 +81,7 @@ export function useAssetLoader(totalRounds: Ref<number>, gameMode: Ref<GameMode>
   // CLEANUP
   // ============================================================================
   function cleanup() {
-    allImages.value.forEach(url => URL.revokeObjectURL(url))
+    allImages.value.forEach((url) => URL.revokeObjectURL(url))
     if (audioUrl.value) {
       URL.revokeObjectURL(audioUrl.value)
     }

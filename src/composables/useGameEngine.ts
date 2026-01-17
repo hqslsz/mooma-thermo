@@ -41,7 +41,7 @@ export function useGameEngine() {
   // COMPUTED
   // ============================================================================
   const displayBeat = computed(() => Math.floor(currentBeat.value) % TOTAL_BEATS)
-  const displayPhase = computed(() => displayBeat.value < REVEAL_PHASE_END ? 'REVEAL' : 'SCAN')
+  const displayPhase = computed(() => (displayBeat.value < REVEAL_PHASE_END ? 'REVEAL' : 'SCAN'))
 
   const progressPercent = computed(() => {
     const beatInCycle = currentBeat.value % TOTAL_BEATS
@@ -83,7 +83,7 @@ export function useGameEngine() {
         // Game finished - stop the engine and clear UI
         scanIndex.value = -1
         revealedCards.value = new Array(CARD_COUNT).fill(false)
-        
+
         if (audioElement.value) {
           audioElement.value.pause()
         }
@@ -92,7 +92,7 @@ export function useGameEngine() {
           cancelAnimationFrame(animationFrameId)
           animationFrameId = null
         }
-        
+
         // Delay before showing finished screen
         finishTimeoutId = setTimeout(() => {
           isGameFinished.value = true
@@ -100,7 +100,7 @@ export function useGameEngine() {
         }, finishDelay.value * 1000)
         return
       }
-      
+
       // Continue to next round
       revealedCards.value = new Array(CARD_COUNT).fill(false)
       scanIndex.value = -1
@@ -108,7 +108,7 @@ export function useGameEngine() {
       // Force cards face-down before image refresh (random mode)
       currentPhase.value = 'reveal'
       currentRound.value = currentRound.value + 1
-      
+
       // 重要：在这里 return，让下一帧来处理 beat 0 的 reveal
       // 这给图片更新（由 currentRound 的 watcher 触发）留出时间
       // 否则第一张卡片会在图片更新前就被 reveal，导致随机模式下第一张图不变

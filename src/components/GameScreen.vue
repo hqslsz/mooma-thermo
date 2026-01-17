@@ -37,7 +37,7 @@ onUnmounted(() => {
 })
 
 const emit = defineEmits<{
-  'exit': []
+  exit: []
   'toggle-play': []
   'audio-ended': []
   'audio-ref': [el: HTMLAudioElement | null]
@@ -54,8 +54,8 @@ function setAudioRef(el: HTMLAudioElement | null) {
     <audio
       :ref="(el) => setAudioRef(el as HTMLAudioElement | null)"
       :src="audioUrl"
-      @ended="emit('audio-ended')"
       preload="auto"
+      @ended="emit('audio-ended')"
     />
 
     <!-- Top Bar -->
@@ -72,10 +72,7 @@ function setAudioRef(el: HTMLAudioElement | null) {
     />
 
     <!-- Progress Bar -->
-    <GameProgressBar
-      :current-phase="currentPhase"
-      :progress-percent="progressPercent"
-    />
+    <GameProgressBar :current-phase="currentPhase" :progress-percent="progressPercent" />
 
     <!-- Game Grid -->
     <GameGrid
@@ -89,8 +86,7 @@ function setAudioRef(el: HTMLAudioElement | null) {
     <!-- Bottom Instructions -->
     <div v-show="!hideUI" class="text-center text-gray-500 text-sm font-mono mt-6">
       <span class="text-neon-green">SPACE</span> Play/Pause •
-      <span class="text-neon-pink">ESC</span> Exit •
-      <span class="text-neon-blue">H</span> Hide UI
+      <span class="text-neon-pink">ESC</span> Exit • <span class="text-neon-blue">H</span> Hide UI
     </div>
   </div>
 </template>

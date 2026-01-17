@@ -11,4 +11,3 @@ export { default as AdvancedSettings } from './setup/AdvancedSettings.vue'
 export { default as GameTopBar } from './game/GameTopBar.vue'
 export { default as GameProgressBar } from './game/GameProgressBar.vue'
 export { default as GameGrid } from './game/GameGrid.vue'
-

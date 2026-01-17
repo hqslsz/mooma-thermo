@@ -15,4 +15,3 @@ export const DEFAULT_AUDIO_OFFSET = 2.622951
 export const DEFAULT_TOTAL_ROUNDS = 5
 export const DEFAULT_GAME_MODE = 'standard' as const
 export const DEFAULT_FINISH_DELAY = 3 // seconds
-

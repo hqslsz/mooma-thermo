@@ -11,8 +11,8 @@ const props = defineProps<{
 }>()
 
 // Track if the card face should be visible
-const isFaceVisible = computed(() => 
-  (props.phase === 'reveal' && props.isRevealed) || props.phase === 'scan'
+const isFaceVisible = computed(
+  () => (props.phase === 'reveal' && props.isRevealed) || props.phase === 'scan',
 )
 
 // Delayed image update - only change image when card is face-down
@@ -33,18 +33,22 @@ function tryApplyPendingImage() {
 
 // 监听 imageSrc 变化 - 使用 flush: 'sync' 确保同步执行
 // 这样在新轮次开始时，图片更新能在卡片翻开之前完成
-watch(() => props.imageSrc, (newSrc) => {
-  if (newSrc !== displayImage.value) {
-    // 如果卡片当前是背面状态，可以安全地立即更新
-    if (!isFaceVisible.value) {
-      displayImage.value = newSrc
-      pendingImageSrc.value = null
-    } else {
-      // 卡片正面可见时，等待它翻到背面再更新
-      pendingImageSrc.value = newSrc
+watch(
+  () => props.imageSrc,
+  (newSrc) => {
+    if (newSrc !== displayImage.value) {
+      // 如果卡片当前是背面状态，可以安全地立即更新
+      if (!isFaceVisible.value) {
+        displayImage.value = newSrc
+        pendingImageSrc.value = null
+      } else {
+        // 卡片正面可见时，等待它翻到背面再更新
+        pendingImageSrc.value = newSrc
+      }
     }
-  }
-}, { flush: 'sync' })
+  },
+  { flush: 'sync' },
+)
 
 // 监听卡牌翻到背面
 watch(isFaceVisible, (visible) => {
@@ -59,12 +63,8 @@ watch(isFaceVisible, (visible) => {
     class="relative rounded-2xl overflow-hidden transition-all duration-150"
     :class="[
       'bg-cyber-card border-4',
-      isScanning
-        ? 'border-neon-green scanning scale-105 z-10'
-        : 'border-cyber-border',
-      phase === 'reveal' && isRevealed
-        ? 'card-reveal'
-        : ''
+      isScanning ? 'border-neon-green scanning scale-105 z-10' : 'border-cyber-border',
+      phase === 'reveal' && isRevealed ? 'card-reveal' : '',
     ]"
   >
     <!-- Card Face (Image) -->
@@ -72,11 +72,7 @@ watch(isFaceVisible, (visible) => {
       class="absolute inset-0 transition-opacity duration-200"
       :class="isFaceVisible ? 'opacity-100' : 'opacity-0'"
     >
-      <img
-        :src="displayImage"
-        class="w-full h-full object-contain"
-        :alt="`Card ${index + 1}`"
-      />
+      <img :src="displayImage" class="w-full h-full object-contain" :alt="`Card ${index + 1}`" />
     </div>
 
     <!-- Card Back -->
@@ -98,4 +94,3 @@ watch(isFaceVisible, (visible) => {
     </div>
   </div>
 </template>
-

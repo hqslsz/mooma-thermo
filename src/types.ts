@@ -26,4 +26,3 @@ export interface GameStatus {
   currentRound: number
   isPlaying: boolean
 }
-

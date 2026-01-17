@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  'select': [event: Event]
+  select: [event: Event]
 }>()
 
 // For image preview
@@ -24,14 +24,14 @@ const accentClasses = computed(() => {
       'group-hover:border-neon-blue',
       'group-focus-within:border-neon-blue',
       'group-focus-within:shadow-[0_0_0_1px_var(--color-neon-blue)]',
-      'group-hover:text-neon-blue'
+      'group-hover:text-neon-blue',
     ]
   }
   return [
     'group-hover:border-neon-pink',
     'group-focus-within:border-neon-pink',
     'group-focus-within:shadow-[0_0_0_1px_var(--color-neon-pink)]',
-    'group-hover:text-neon-pink'
+    'group-hover:text-neon-pink',
   ]
 })
 </script>
@@ -41,11 +41,17 @@ const accentClasses = computed(() => {
     <label
       :class="[
         'flex items-center gap-2 text-sm font-medium pl-1',
-        props.type === 'image' ? 'text-neon-blue' : 'text-neon-pink'
+        props.type === 'image' ? 'text-neon-blue' : 'text-neon-pink',
       ]"
     >
       <!-- Image Icon -->
-      <svg v-if="type === 'image'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg
+        v-if="type === 'image'"
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -70,13 +76,13 @@ const accentClasses = computed(() => {
         type="file"
         :webkitdirectory="type === 'image'"
         :accept="type === 'audio' ? 'audio/*' : undefined"
-        @change="emit('select', $event)"
         class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        @change="emit('select', $event)"
       />
       <div
         :class="[
           'pl-4 pr-3 py-2.5 bg-cyber-card border border-cyber-border rounded-lg text-gray-400 font-mono text-sm truncate transition-all duration-200',
-          ...accentClasses
+          ...accentClasses,
         ]"
       >
         {{ displayText || placeholder }}
@@ -105,4 +111,3 @@ const accentClasses = computed(() => {
     </div>
   </div>
 </template>
-

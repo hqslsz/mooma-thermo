@@ -27,7 +27,7 @@ function shuffleArray<T>(array: T[]): T[] {
 export function getImagesForRoundByMode(
   allImages: string[],
   round: number,
-  mode: GameMode
+  mode: GameMode,
 ): string[] {
   if (allImages.length === 0) return []
 
@@ -43,16 +43,16 @@ export function getImagesForRoundByMode(
     // Not enough images, fill with random duplicates
     const result: string[] = []
     const shuffled = shuffleArray(allImages)
-    
+
     // First, add all unique images
     result.push(...shuffled)
-    
+
     // Fill remaining slots with random picks
     while (result.length < CARD_COUNT) {
       const randomIdx = Math.floor(Math.random() * allImages.length)
       result.push(allImages[randomIdx])
     }
-    
+
     // Shuffle the final result so duplicates aren't at the end
     return shuffleArray(result)
   }
@@ -61,4 +61,3 @@ export function getImagesForRoundByMode(
   const shuffled = shuffleArray(allImages)
   return shuffled.slice(0, CARD_COUNT)
 }
-

@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="https://img.shields.io/badge/A%20beat--synchronized%20memory%20card%20game%20with%20cyberpunk%20neon%20aesthetics-bf00ff?style=for-the-badge" alt="Description">
 </p>
@@ -26,6 +25,7 @@ A rhythm-based memory game where players memorize and recall images on cards fol
 ## ✨ Features
 
 ### Core Gameplay
+
 - 🎵 **16-Beat Cycle Engine** - Reveal + Scan dual-phase loop
 - 🔄 **Multi-Round Games** - Configurable rounds with auto-loop playback
 - 🎲 **Dual Game Modes**
@@ -33,11 +33,13 @@ A rhythm-based memory game where players memorize and recall images on cards fol
   - **Random Mode**: Randomly select 8 unique images per round (Fisher-Yates shuffle algorithm)
 
 ### Customization
+
 - ⚡ **BPM Configuration** - Customize music tempo
 - ⏱️ **Audio Offset** - Precise music-to-beat synchronization
 - 🔢 **Round Settings** - Set custom game rounds
 
 ### UI & Experience
+
 - 🌈 **Cyberpunk Neon UI** - Stunning visual effects
 - 📊 **Real-time Progress Bar** - Shows current beat position
 - 🎯 **Smooth Card Flip Animations** - Optimized transitions without flickering
@@ -45,11 +47,11 @@ A rhythm-based memory game where players memorize and recall images on cards fol
 
 ## 🎹 Keyboard Shortcuts
 
-| Key | Function |
-|-----|----------|
-| `Space` | Play/Pause |
-| `Escape` | Exit Game |
-| `H` | Hide/Show UI (EXIT button, PLAY button, bottom hints) |
+| Key      | Function                                              |
+| -------- | ----------------------------------------------------- |
+| `Space`  | Play/Pause                                            |
+| `Escape` | Exit Game                                             |
+| `H`      | Hide/Show UI (EXIT button, PLAY button, bottom hints) |
 
 ## 🚀 Quick Start
 
@@ -80,6 +82,32 @@ npm run build
 
 # Preview build
 npm run preview
+```
+
+## ✅ Code Quality & Checks
+
+### One-Command Check
+
+```bash
+npm run check
+```
+
+### Fix & Format
+
+```bash
+# Auto-fix ESLint warnings (attribute order, unused vars, etc.)
+npx eslint . --ext .ts,.vue --fix
+
+# Apply Prettier formatting
+npm run format
+```
+
+### Recommended Order
+
+```bash
+npx eslint . --ext .ts,.vue --fix
+npm run format
+npm run check
 ```
 
 ## 🎯 How to Play
@@ -124,6 +152,31 @@ src/
 └── main.ts                     # App entry point
 ```
 
+## 🔗 File Collaboration Diagram
+
+```mermaid
+flowchart TD
+  main[main.ts] --> App[App.vue]
+  App --> SetupScreen[SetupScreen.vue]
+  App --> GameScreen[GameScreen.vue]
+  App --> FinishedScreen[FinishedScreen.vue]
+  App --> useGameEngine[useGameEngine.ts]
+  App --> useAssetLoader[useAssetLoader.ts]
+
+  SetupScreen --> FileInput[FileInput.vue]
+  SetupScreen --> AdvancedSettings[AdvancedSettings.vue]
+
+  GameScreen --> GameTopBar[GameTopBar.vue]
+  GameScreen --> GameProgressBar[GameProgressBar.vue]
+  GameScreen --> GameGrid[GameGrid.vue]
+  GameGrid --> GameCard[GameCard.vue]
+
+  useAssetLoader --> useImageSelector[useImageSelector.ts]
+  useAssetLoader --> constants[constants.ts]
+  useGameEngine --> constants
+  useGameEngine --> types[types.ts]
+```
+
 ## 🎨 Tech Stack
 
 - **Vue 3** - Composition API + `<script setup>`
@@ -135,11 +188,13 @@ src/
 ## 📝 Changelog
 
 ### v1.0.1
+
 - ✅ Added game finished screen with delayed transition
 - ✅ Added finish delay setting (customizable in OPTIONS)
 - ✅ Game now stops at max rounds instead of looping
 
 ### v1.0.0
+
 - ✅ Implemented 16-beat cycle game engine (reveal + scan phases)
 - ✅ Multi-round game support with configurable rounds
 - ✅ Cyberpunk neon-style UI
