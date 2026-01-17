@@ -6,6 +6,10 @@
 </p>
 
 <p align="center">
+  <a href="README_CN.md">简体中文</a> | <b>English</b> | <a href="README_JA.md">日本語</a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Vue-3.5-4FC08D?style=flat-square&logo=vue.js" alt="Vue">
   <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript" alt="TypeScript">
   <img src="https://img.shields.io/badge/Vite-7.2-646CFF?style=flat-square&logo=vite" alt="Vite">
@@ -13,9 +17,21 @@
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License">
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Privacy-Local%20Only-2ecc71?style=flat-square&logo=shieldsdotio" alt="Privacy">
+  <img src="https://img.shields.io/badge/Upload-None-27ae60?style=flat-square&logo=cloudflare" alt="No Upload">
+  <img src="https://img.shields.io/badge/Offline-Ready-3498db?style=flat-square&logo=wifi" alt="Offline Ready">
+</p>
+
 ---
 
 ## 📖 About
+
+> This project was born from a spark of inspiration while I was cramming for my Power Electronics final exam. A course like Power Electronics, which relies heavily on memorizing typical circuit structures, is a natural fit for rhythm games like Moo Ma Ka Kai. I wanted to create similar "rapid-fire Q&A" videos for these circuits, but existing solutions seemed to require applying After Effects templates or using mobile editing templates (like those on TikTok/Douyin).
+>
+> But what if I don't know AE and don't use TikTok? Considering that my requirements were naturally suited for a web-based solution, I built this WebApp using the Vue 3 framework to simplify the video creation process for myself.
+>
+> If you have similar needs and find this project helpful, I would be truly honored. Please feel free to submit issues or PRs for any bugs or feature requests. I am deeply aware of my limitations and the potential shortcomings of this work; therefore, I am sincerely grateful for any guidance, corrections, or contributions.
 
 A rhythm-based memory game where players memorize and recall images on cards following the music beat. The game uses a **16-beat cycle mechanism**:
 
@@ -44,6 +60,12 @@ A rhythm-based memory game where players memorize and recall images on cards fol
 - 📊 **Real-time Progress Bar** - Shows current beat position
 - 🎯 **Smooth Card Flip Animations** - Optimized transitions without flickering
 - 👁️ **UI Toggle** - Press H to hide/show control buttons
+
+### Privacy & Security
+
+- 🔐 **Local Processing Only** - All files processed via Browser File API, never uploaded to any server
+- 📡 **Offline Ready** - Works without internet connection after page load
+- 🗑️ **Auto Cleanup** - Files automatically cleared from memory when page closes
 
 ## 🎹 Keyboard Shortcuts
 
